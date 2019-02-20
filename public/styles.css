@@ -1,38 +1,41 @@
-* {
+body, html {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  overflow: hidden;
+  height:100%;
 }
-body {
-  font: 13px Helvetica, Arial;
+
+.users-panel {
+  background-color: lightskyblue;
+  height:100vh
 }
-form {
-  background: #000;
-  padding: 3px;
-  position: fixed;
-  bottom: 0;
+
+.messages-panel {
+  background-color: white;
+  height: 100vh;
+  position: absolute;
+  right: 0px;
+  overflow-y: scroll;
+  overflow: hidden;
+}
+
+.message-form {
+  position: absolute; 
+  bottom: 20px;
+  margin-right: 30px;
+}
+
+.messages {
+  position: absolute;
+  top: 80px;
+  bottom: 50px;
+  overflow: scroll;
+  right: 0px;
   width: 100%;
+  -ms-overflow-style: none;  
+  overflow: -moz-scrollbars-none; 
+
 }
-form input {
-  border: 0;
-  padding: 10px;
-  width: 90%;
-  margin-right: 0.5%;
-}
-form button {
-  width: 9%;
-  background: rgb(130, 224, 255);
-  border: none;
-  padding: 10px;
-}
-#messages {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-#messages li {
-  padding: 5px 10px;
-}
-#messages li:nth-child(odd) {
-  background: #eee;
+
+.messages::-webkit-scrollbar { 
+  display: none; 
 }

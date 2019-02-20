@@ -2,29 +2,38 @@
 <html>
   <head>
     <title>Chat App</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
   </head>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-  <script>
-    $(function() {
-      var socket = io();
-      $("form").submit(function(e) {
-        e.preventDefault(); // prevents page reloading
-        socket.emit("chat message", $("#m").val());
-        $("#m").val("");
-        return false;
-      });
-      socket.on('chat message', function(msg){
-      $('#messages').append($('<li>').text(msg));
-    });
-    });
-  </script>
+  <script src="scripts.js"></script>
   <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+    <div class="container-fluid app-container">
+      <div class="row">
+        <div class="col-md-2 users-panel">
+          <h2>Connected Users</h2>
+          <hr>
+        </div>
+        <div class="col-md-10 messages-panel">
+          <h2 id="username">User1</h1>
+          <hr>
+          <div id="message-box" class="messages">
+            <ul id="message-list">
+            </ul>
+          </div>
+          <div class = "message-form">
+            <form action="" class="input-group">
+                <input id="m" value="" class="form-control" type="text">
+                <div class="input-group-btn">
+                <button id="b1" type="submit" class="btn btn-primary">Send</button>
+                </div>
+            </form>
+          </div>
+      </div>
+    </div>
   </body>
 </html>
