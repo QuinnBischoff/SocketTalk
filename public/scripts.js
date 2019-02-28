@@ -10,23 +10,24 @@ $(function() {
   });
 
   //SOCKET INPUT HANDLERS
-  socket.on('chat message', function(msg){
-    appendMessageToList(msg);
+  socket.on('chat message', function(msgItem){
+    appendMessageToList(msgItem);
     scrollDown();
   });
 
   socket.on('message load', function(msgs) {
     let messages = JSON.parse(msgs);
+    console.log(messages);
     messages = messages.reverse();
     for (msg in messages) {
-      appendMessageToList(messages[msg].message);
+      appendMessageToList(messages[msg]);
     }
     scrollDown();
   });
 
   //HELPER FUNCTIONS
-  function appendMessageToList(msg) {
-    $('#message-list').append($('<li>').text(msg));
+  function appendMessageToList(msgItem) {
+    $('#message-list').prepend($('<li>').text(msgItem.time + ": " + msgItem.message));
   }
 
   function scrollDown(){

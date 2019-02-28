@@ -36,8 +36,17 @@ body, html {
   vertical-align: bottom;
 }
 
+.messages:after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: bottom;
+}
+
 #message-list {
   position: absolute;
+  display: flex;
+  flex-direction: column-reverse;
   bottom: 0px;
 }
 

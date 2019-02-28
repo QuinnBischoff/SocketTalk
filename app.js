@@ -5,6 +5,7 @@ var path = require('path');
 var io = require('socket.io')(http);
 
 let messages = [];
+let usernames = [];
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -28,8 +29,9 @@ io.on('connection', function(socket){
       minute: '2-digit',
     });
 
-    messages.unshift({time: timeStamp, message: msg});
-    io.emit('chat message', msg);
+    messageItem = {time: timeStamp, message: msg};
+    messages.unshift(messageItem);
+    io.emit('chat message', messageItem);
   });
 });
 
