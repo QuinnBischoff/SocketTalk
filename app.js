@@ -17,15 +17,12 @@ app.get('/', function(req, res){
  // res.sendFile(__dirname + '/public/index.html');
 });
 
-io.on('connection', function(socket){
+io.on('connection', function(socket) {
   let cookieString = socket.handshake.headers.cookie;
-  console.log(cookieString);
   let connectedUser;
   let newUser = true;
-  
   if (cookieString) {
     let cookies = cookieReader.parse(socket.handshake.headers.cookie);
-    console.log(cookies);
     //create a new user object
     if (cookies.username) {
       connectedUser = users.find(user => user.name === cookies.username);
@@ -36,8 +33,12 @@ io.on('connection', function(socket){
     }
   }
   if (newUser) {
+    let username = getRandomName();
+    if(!username) {
+      return;
+    }
     connectedUser = {
-      name: getRandomName(),
+      name: username,
       color: '000000',
       active: true,
       };
@@ -109,9 +110,20 @@ function validateNewName(name) {
 function getRandomName() {
   let nameIndex = Math.floor(Math.random()*usernames.length);
   let name = usernames[nameIndex];
-  while (users.find(a => a.name == name)) {
+  //try to find a non-used name, if can't find one after 10 times, say chat's full
+  let nameUnique = false;
+  for(let i = 0; i < 10; i++) {
+    if (!users.find(a => a.name == name)) {
+      nameUnique = true;
+      break;
+    }
     nameIndex = Math.floor(Math.random()*usernames.length);
     name = usernames[nameIndex];
   }
-  return name;
+  if(nameUnique = true) {
+    return name;
+  }
+  else {
+    return null;
+  }
 }
