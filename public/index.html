@@ -14,20 +14,21 @@
   <body>
     <div class="container-fluid app-container">
       <div class="row">
-        <div class="col-md-2 users-panel">
-          <h2>Connected Users</h2>
+        <div class="col-md-2 col-sm-2 col-xs-2 users-panel">
+          <h2>Active Users</h2>
           <hr>
+          <ul id="users-list">
+          </ul>
         </div>
-        <div class="col-md-10 messages-panel">
-          <h2 id="username">User1</h1>
+        <div class="col-md-10 col-sm-10 col-xs-10 messages-panel">
+          <h2 id="username"></h1>
           <hr>
           <div id="message-box" class="messages">
-            <ul id="message-list">
-            </ul>
+            <ul id="message-list"></ul>
           </div>
           <div class = "message-form">
             <form action="" class="input-group">
-                <input id="m" value="" class="form-control" type="text">
+                <input id="input-form" autocomplete="off" value="" class="form-control" type="text">
                 <div class="input-group-btn">
                 <button id="b1" type="submit" class="btn btn-primary">Send</button>
                 </div>
