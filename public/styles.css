@@ -6,6 +6,10 @@ body, html {
   min-height: 0
 }
 
+#users-list {
+  padding-left: 10px;
+}
+
 .users-panel {
   background-color: lightskyblue;
   height:100vh
