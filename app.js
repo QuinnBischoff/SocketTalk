@@ -68,7 +68,7 @@ io.on('connection', function(socket) {
     });
     messageItem = {time: timeStamp, message: msg, sender: socket.user.name, color: socket.user.color};
     messages.unshift(messageItem);
-    io.emit('chat message', messageItem);
+    io.emit('chat message', messages);
   });
 
   socket.on('color change', function(data) {
@@ -79,9 +79,15 @@ io.on('connection', function(socket) {
     if (!validateNewName(data.newName)) {
       return;
     }
+    for (message of messages) {
+      if (message.sender === socket.user.name) {
+        message.sender = data.newName;
+      }
+    }
     socket.user.name = data.newName;
     socket.emit('change name', data.newName);
     io.emit('active user update', getActiveUsers());
+    io.emit('chat message', messages);
   });
 
 });

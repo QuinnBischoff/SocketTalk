@@ -37,7 +37,11 @@ $(function() {
 
   //SOCKET INPUT HANDLERS
   socket.on('chat message', function(msg){
-    appendMessageToList(msg);
+    $('#message-list').empty()
+    messages = msg.reverse();
+    for (msg in messages) {
+      appendMessageToList(messages[msg]);
+    }
     scrollDown();
   });
 
@@ -115,6 +119,4 @@ $(function() {
     }
     return "";
   }
-
 });
-
