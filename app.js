@@ -12,9 +12,7 @@ let users = [];
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res){
-//  console.log("here");
- // res.cookie("username", "quinn");
- // res.sendFile(__dirname + '/public/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 io.on('connection', function(socket) {
@@ -33,7 +31,7 @@ io.on('connection', function(socket) {
     }
   }
   if (newUser) {
-    let username = getRandomName();
+    let username = getRandomName();  //assign a username if this person is new
     if(!username) {
       return;
     }
@@ -51,14 +49,12 @@ io.on('connection', function(socket) {
        username: connectedUser.name,
        messages: messages,
     })); //send the user their set name, and all the existing messages
-  //tell everyone to update their active list
-  io.emit('active user update', getActiveUsers());
+  io.emit('active user update', getActiveUsers()); //tell everyone to update their active list
   
 
   socket.on('disconnect', function() {
     users[users.indexOf(socket.user)].active = false; //remove from active
-    //tell everyone to update their active list
-    io.emit('active user update', getActiveUsers());
+    io.emit('active user update', getActiveUsers()); //tell everyone to update their active list
   });
   
   socket.on('chat message', function(msg){
@@ -66,28 +62,35 @@ io.on('connection', function(socket) {
       hour: '2-digit',
       minute: '2-digit',
     });
+    //set the message, time, color, and name of the user in a message object
     messageItem = {time: timeStamp, message: msg, sender: socket.user.name, color: socket.user.color};
+    //append the message to the list.
     messages.unshift(messageItem);
+    //send the entire messages list to all the users
     io.emit('chat message', messages);
   });
 
   socket.on('color change', function(data) {
+    //change the color assigned to a user
     socket.user.color = data.newColor;
   });
 
   socket.on('name change', function(data) {
+    //make sure it's a new name
     if (!validateNewName(data.newName)) {
       return;
     }
     for (message of messages) {
       if (message.sender === socket.user.name) {
+        //update all the messages that were sent from this user, to have the new name
+        //this means any messages you sent will have their name updated to your new nickname.
         message.sender = data.newName;
       }
     }
     socket.user.name = data.newName;
-    socket.emit('change name', data.newName);
-    io.emit('active user update', getActiveUsers());
-    io.emit('chat message', messages);
+    socket.emit('change name', data.newName); //tell the specific user their name changed
+    io.emit('active user update', getActiveUsers()); //tell everyone to update their active list
+    io.emit('chat message', messages); //send the messages list, with new updated nicknames
   });
 
 });
