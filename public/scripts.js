@@ -119,7 +119,7 @@ $(function() {
 
   //Scrolls the messages view to the bottom.
   function scrollDown(){
-    $('#message-list').animate({scrollTop: $('#message-list').prop("scrollHeight")}, 1);
+    $('#message-list').animate({scrollTop: $('#message-list').prop("scrollHeight")}, duration=0);
   }
 
   //Gets the cookie for the application.
